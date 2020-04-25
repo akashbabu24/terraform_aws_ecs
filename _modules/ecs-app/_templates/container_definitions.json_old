@@ -1,0 +1,61 @@
+[
+    {
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "secretOptions": [],
+        "options": {
+          "awslogs-group": "VID-Play-NewsON",
+          "awslogs-region": "us-west-2",
+          "awslogs-stream-prefix": "VID-Play-NewsON2"
+        }
+      },
+      "portMappings": [
+        {
+          "hostPort": 8080,
+          "protocol": "tcp",
+          "containerPort": 8080
+        }
+      ],
+      "cpu": 4090,
+      "environment": [
+        {
+          "name": "ENGINE_IDX",
+          "value": "2"
+        }
+      ],
+      "ulimits": [
+        {
+          "name": "nofile",
+          "softLimit": 102400,
+          "hardLimit": 102400
+        }
+      ],
+      "memory": 5120,
+      "memoryReservation": null,
+      "volumesFrom": [
+        {
+          "sourceContainer": "configs",
+          "readOnly": false
+        }
+      ],
+      "image": "231803920768.dkr.ecr.us-west-2.amazonaws.com/playout-media-services:latest",
+      "essential": true,
+      "readonlyRootFilesystem": false,
+      "privileged": false,
+      "name": "playout"
+    },
+    {
+      "command": [
+        "/bin/sh",
+        "-c",
+        "while [ 1 ]; do sleep 10; done"
+      ],
+      "cpu": 0,
+      "memoryReservation": 10,
+      "image": "231803920768.dkr.ecr.us-west-2.amazonaws.com/configs:latest",
+      "essential": true,
+      "readonlyRootFilesystem": false,
+      "privileged": false,
+      "name": "configs"
+    }
+  ]
